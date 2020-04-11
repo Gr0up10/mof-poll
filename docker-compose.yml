@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  poll:
+    build: .
+    environment:
+      - HANDLER_HOST=erer
