@@ -21,7 +21,7 @@ class SessionTest()
     TestKit.shutdownActorSystem(system)
   }
 
-  test("Poll handler test"){
+  test("Session handler test"){
     val probe = TestProbe()
     val poll = system.actorOf(Session.props(probe.ref))
     poll ! "connected"

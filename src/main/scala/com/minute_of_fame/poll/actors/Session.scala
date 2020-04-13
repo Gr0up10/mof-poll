@@ -24,6 +24,7 @@ class Session(handler: ActorRef) extends Actor with akka.actor.ActorLogging {
         case Some(m) =>
           val pack = ((messagesTypes.find(t => m.is(t)).get))
           handler !  m.unpack(pack)
+        case None => log.warning("Pack {} does not contains message", pack)
       }
 
     case m: scalapb.GeneratedMessage =>

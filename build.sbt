@@ -17,6 +17,14 @@ libraryDependencies ++= Seq(
 ).map(_ % circeVersion)
 
 
+libraryDependencies ++= Seq(
+  "io.getquill" %% "quill-jdbc" % "3.5.1"
+)
+
+libraryDependencies ++= Seq(
+  "org.postgresql" % "postgresql" % "9.4.1208"
+)
+
 PB.targets in Compile := Seq(
   scalapb.gen() -> (sourceManaged in Compile).value
 )

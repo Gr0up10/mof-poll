@@ -31,8 +31,8 @@ class PollHandlerTest()
     poll ! packets.Packet(userId = 1, data = CommandPacket("like", "").asJson.noSpaces)
     expectMsg(packets.Packet(userId = 1, data = CommandPacket("update_stat", UpdateStat(1, 0).asJson.noSpaces).asJson.noSpaces))
     poll ! packets.Packet(userId = 1, data = CommandPacket("dislike", "").asJson.noSpaces)
-    expectMsg(packets.Packet(userId = 1, data = CommandPacket("update_stat", UpdateStat(1, 1).asJson.noSpaces).asJson.noSpaces))
+    expectMsg(packets.Packet(userId = 1, data = CommandPacket("update_stat", UpdateStat(0, 1).asJson.noSpaces).asJson.noSpaces))
     poll ! packets.Packet(userId = 2, data = "connected")
-    expectMsg(packets.Packet(userId = 2, data = CommandPacket("update_stat", UpdateStat(1, 1).asJson.noSpaces).asJson.noSpaces))
+    expectMsg(packets.Packet(userId = 2, data = CommandPacket("update_stat", UpdateStat(0, 1).asJson.noSpaces).asJson.noSpaces))
   }
 }
