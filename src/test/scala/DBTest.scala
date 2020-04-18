@@ -16,27 +16,30 @@ class DBTest()
     with InitDB {
 
   import com.minute_of_fame.poll.actors.ctx
+  import ctx._
 
   override def afterAll: Unit = {
     TestKit.shutdownActorSystem(system)
+
+    ctx.run(ctx.quote {ctx.query[AppPollstat].delete})
+    ctx.run(ctx.quote {ctx.query[AppStream].delete})
+    ctx.run(ctx.quote {ctx.query[AuthUser].delete})
   }
 
-  import ctx._
+  val poll = system.actorOf(DataBase.props)
+  test("Save model") {
+    poll ! DataBase.SaveVote(0, like = true)
+    expectMsg(SaveComplete(0))
+    val res = ctx.run(ctx.query[AppPollstat].filter(_.userId == 0))
+    assert(res.size == 1)
+    assert(res(0).streamId == 0)
+  }
+  test("Change vote") {
+    poll ! DataBase.SaveVote(0, like = false)
+    expectMsg(SaveComplete(0))
+    val res = ctx.run(ctx.query[AppPollstat].filter(_.userId == 0))
+    assert(res.size == 1)
+    assert(res(0).vote == 0)
+  }
 
-  test("DB actor test"){
-    val poll = system.actorOf(DataBase.props)
-    test("Save model") {
-      poll ! DataBase.SaveVote(0, like = true)
-      expectMsg(SaveComplete(0))
-      val res = ctx.run(ctx.query[AppPollstat].filter(_.userId == 0))
-      assert(res.size == 1)
-      assert(res(0).streamId == 0)
-    }
-    test("Change vote") {
-      poll ! DataBase.SaveVote(0, like = false)
-      val res = ctx.run(ctx.query[AppPollstat].filter(_.userId == 0))
-      assert(res.size == 1)
-      assert(res(0).vote == 0)
-    }
-   }
 }
