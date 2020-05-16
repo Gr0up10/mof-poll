@@ -2,7 +2,7 @@ import akka.actor.ActorSystem
 import akka.io.Tcp.Write
 import akka.testkit.{ImplicitSender, TestActors, TestKit, TestProbe}
 import akka.util.ByteString
-import com.minute_of_fame.poll.actors.{PollHandler, Session}
+import com.minute_of_fame.poll.actors.{PollHandler}
 import com.minute_of_fame.poll.models.JsonPackets.{CommandPacket, UpdateStat}
 import org.scalatest.{BeforeAndAfterAll, FunSuiteLike, Matchers}
 import io.circe.generic.auto._
