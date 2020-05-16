@@ -11,7 +11,7 @@ message PacketWrapper {
 }
 
 message Packet {
-    int32 user_id = 1;
+    sint32 user_id = 1;
     bool is_auth = 2;
     string data = 3;
 }
@@ -27,5 +27,10 @@ message Result {
         FAIL = 1;
     }
     Status status = 1;
+    string message = 2;
+}
+
+message InternalPacket {
+    string sender = 1;
     string message = 2;
 }
