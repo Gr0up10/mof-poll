@@ -66,7 +66,7 @@ class PollHandler(db: ActorRef) extends Actor with ActorLogging {
                     if(clients(pack.userId) == -1) dislikes -= 1
                     clients(pack.userId) = 1
                     likes += 1
-                    db ! DataBase.SaveVote(pack.userId, like = false)
+                    db ! DataBase.SaveVote(pack.userId, like = true)
                     sendState()
                   }
                 case "dislike" =>

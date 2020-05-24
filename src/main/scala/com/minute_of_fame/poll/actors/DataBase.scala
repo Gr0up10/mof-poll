@@ -34,7 +34,7 @@ class DataBase extends Actor  with ActorLogging{
 
           run(query[AppPollstat].filter(m => m.userId==lift(id) && m.streamId == lift(streamId))).lift(0) match {
             case Some(m) =>
-              run(query[AppPollstat].update(lift(model(m.id))))
+              run(query[AppPollstat].filter(_.id == lift(m.id)).update(lift(model(m.id))))
             case None =>
               log.info(s"Saving vote $id $vote")
               run(quote {query[AppPollstat].insert(lift(model(0))).returningGenerated(_.id)})
